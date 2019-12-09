@@ -41,6 +41,7 @@ console.log(cita);
                     name="propietario"
                     className="u-full-width"
                     placeholder="Nombre Dueño de la Mascota"
+                    onChange={actualizarState}
                   />
 
                   <label>Fecha</label>
@@ -48,6 +49,7 @@ console.log(cita);
                     type="date"
                     className="u-full-width"
                     name="fecha"
+                    onChange={actualizarState}
                   />
 
                   <label>Hora</label>
@@ -55,12 +57,14 @@ console.log(cita);
                     type="time"
                     className="u-full-width"
                     name="hora"
+                    onChange={actualizarState}
                   />
 
                   <label>Sintomas</label>
                   <textarea
                     className="u-full-width"
                     name="sintomas"
+                    onChange={actualizarState}
                   ></textarea>
 
                   <button type="submit" className="button-primary u-full-width">Agregar</button>
