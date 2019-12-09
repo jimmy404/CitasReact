@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 function Cita ({cita, index, eliminarCita}){
     return(
@@ -106,10 +106,17 @@ actualizarCita(stateInicial)
 
 
 function App() {
+  //cargar las citas del localstorage como state inicial
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+
+  if(!citasIniciales){
+    citasIniciales = [];
+  }
+
   //useState retorna 2 funciones (no func como tal, piezas)
   //El primero es el state acutal = this.state
   //El segundo es la func que actualiza el state (similar al this.setState());
-  const [citas, guardarCita] = useState([]);
+  const [citas, guardarCita] = useState(citasIniciales);
 
   //Agregar las nuevas citas al state
   const crearCita = cita => {
@@ -126,6 +133,21 @@ function App() {
     nuevasCitas.splice(index, 1);
     guardarCita(nuevasCitas);
   }
+useEffect(
+  () =>{
+    let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+if(citasIniciales){
+  localStorage.setItem('citas', JSON.stringify(citas));
+}else{
+  localStorage.setItem('citas', JSON.stringify([]));
+}
+
+  }, [citas])
+
+
+//cargar condicionalmente un titulo
+
+const titulo = Object.keys(citas).length === 0 ? 'No hay citas' : 'Administrar las Citas aqui';
 
   return(
     <Fragment>
@@ -138,6 +160,7 @@ function App() {
           />
         </div>
         <div className="one-half column">
+          <h2>{titulo}</h2>
       {citas.map((cita, index) => (
           <Cita
             key={index}
